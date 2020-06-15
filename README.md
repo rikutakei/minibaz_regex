@@ -13,5 +13,6 @@ Here is the overview of what the examples files are about:
 
 # TODO
 
+- Focus more on `grep` and `sed`
 - Add regex challenges to each directory
 - Add READMEs to each directory
