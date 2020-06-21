@@ -78,7 +78,7 @@ Heart_Left_Ventricle.v8.egenes.txt:7130
 
 ## How many of the eGenes have an eQTL variant with a 5-digit rsID (rsXXXXX) in Skin tissues?
 
-The tricky bit here is that you need to escape the square brackets in order to
+The tricky bit here is that you need to escape the curly brackets in order to
 make the counts to work properly. Also, don't forget to search for matching
 words, otherwise it will match all rsIDs in the file:
 
@@ -100,9 +100,10 @@ transporters are classed together, so initially I would do:
 grep "ABCB" Adipose*.txt
 ```
 
-But this gives me other (pseudo-)genes like ABCB17P, so I need to adjust the
-expression to make sure it ends in numbers, and you also need to make sure you
-are matching whole word (and not just some parts of the word):
+But this regular expression might match with other text in some situation (e.g.
+with GABCB), so I need to adjust the expression to make sure it ends in
+numbers, and you also need to make sure you are matching whole word (and not
+just some parts of the word):
 
 ```
 grep -w "ABCB[0-9]*" Adipose*.txt -c
@@ -173,4 +174,51 @@ grep -wf ABCB_rsid.txt *egenes.txt | grep -v "ABCB"
 ```
 
 This should give you HNRNPA1P9 from Adipose tissue (Visceral Omentum).
+
+## Using the `rename` command, remove the ".v8.egenes" part from the filename. (If you don't have a `rename` command, try it with a for-loop)
+
+The `rename` command uses a general form of:
+
+```
+rename <pattern> <replacement> <file(s)>
+```
+
+So, to replace "v8.egenes", try:
+
+```
+rename "v8.egenes" "" *v8.egenes.txt
+```
+
+## You also want to replace all of the "chr" in the egenes files and change the coding of chromosome X to chromosome 23. Use `sed` to achieve the goal.
+
+Similar to the rename command, `sed` has a general form of:
+
+```
+sed 's/<pattern>/<replacement>/g' <file(s)>
+```
+
+The `s` stands for "substitute" and the `g` stands for "global". Together, it
+means "find the pattern and substitute it with the replacement, for all the
+matches you find on the line (i.e. globally)."
+
+So, to answer the question, here is the `sed` command to change "X" to "23":
+
+```
+sed 's/chrX/chr23/g' *.txt
+```
+
+And to remove "chr" from the file:
+
+```
+sed 's/chr//g' *.txt
+```
+
+To save the output, you will have to redirect it to a file. One way to do this
+without making a single file with all the tissues is by using a for-loop:
+
+```
+for file in *.txt; do
+sed 's/chrX/chr23/g' ${file} | sed 's/chr//g' > ${file%.*}.clean.txt;
+done
+```
 

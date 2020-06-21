@@ -45,3 +45,8 @@ tissues.
 1. How many tissues had eGenes with ABCB eQTL variants?
 1. Which of these eGenes are not ABCB transporters?
 
+You have decided that you want to remove the ".v8.egenes" part of the filenames.
+
+1. Using the `rename` command, remove the ".v8.egenes" part from the filename. (If you don't have a `rename` command, try it with a for-loop)
+1. You also want to replace all of the "chr" in the egenes files and change the coding of chromosome X to chromosome 23. Use `sed` to achieve the goal.
+
