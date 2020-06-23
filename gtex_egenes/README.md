@@ -31,7 +31,7 @@ Let's move on to something a little bit more meaningful.
 
 There are 7 classes of ATP binding casette (ABC) transporters: class A (ABCA)
 to class G (ABCG). You are interested in class B ABC transporters in Adipose
-tisse.
+tissue.
 
 1. How many ABCB transporters are listed as eGene in Adipose tissues?
 1. List all the ABCB transporters that are located on chromosome 7 from the matches above (no need to count them up)
